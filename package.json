@@ -1,17 +1,11 @@
 {
-  "dependencies": {
-    "console.table": "^0.10.0",
-    "inquirer": "^8.2.0",
-    "mysql2": "^2.3.3"
-  },
-  "scripts": {
-    "start": "node server.js"
-  },
   "name": "employee-tracker",
   "description": "",
   "version": "1.0.0",
-  "main": "server.js",
-  "devDependencies": {},
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/EricKenji/emp-track.git"
@@ -22,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/EricKenji/emp-track/issues"
   },
-  "homepage": "https://github.com/EricKenji/emp-track#readme"
+  "homepage": "https://github.com/EricKenji/emp-track#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^8.2.0",
+    "mysql2": "^2.3.3"
+  }
 }
