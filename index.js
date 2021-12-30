@@ -22,6 +22,7 @@ function userMenu() {
                 'Add a Role',
                 'Add an Employee',
                 'Update an Employee Role',
+                "Update an Employee's Manager",
                 'Exit Menu'
             ]
         }
@@ -48,6 +49,9 @@ function userMenu() {
                 break;
             case 'Update an Employee Role':
                 updateEmployeeRole();
+                break;
+            case "Update an Employee's Manager":
+                updateEmployeeManager();
                 break;
             case 'Exit Menu':
                 db.end();
@@ -129,9 +133,10 @@ function addRole() {
         }
     ])
     .then(answer => {
-        const sql = `INSERT INTO department (name) VALUES ('${answer.newDept}')`;
+        const sql = `INSERT INTO role (title, salary, department_id) 
+                    VALUES ('${answer.newRole}', ${answer.salary}, ${answer.deptId})`;
         db.query(sql, (err, res) => {
-            console.log('Department added!');
+            console.log('Role added!');
             userMenu();
         });
     });
@@ -140,19 +145,85 @@ function addRole() {
 function addEmployee() {
     inquirer.prompt([
         {
-            name: 'newDept',
+            name: 'firstName',
             type: 'input',
-            message: 'What is the name of the department?'
-        }
+            message: "What is the employee's first name?"
+        },
+        {
+            name: 'lastName',
+            type: 'input',
+            message: "What is the employee's last name?"
+        },
+        {
+            name: 'role',
+            type: 'input',
+            message: "What is the employee's role ID?"
+        },
+        {
+            name: 'manager',
+            type: 'input',
+            message: "What is the employee's manager's ID?"
+        },
     ])
     .then(answer => {
-        const sql = `INSERT INTO department (name) VALUES ('${answer.newDept}')`;
+        const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) 
+                    VALUES ('${answer.firstName}', '${answer.lastName}', ${answer.role}, ${answer.manager})`;
         db.query(sql, (err, res) => {
-            console.log('Department added!');
+            console.log('Employee added!');
             userMenu();
         });
     });
 };
+
+function updateEmployeeRole() {
+    inquirer.prompt([
+        {
+            name: 'employee',
+            type: 'input',
+            message: "Enter the employee ID of the employee you would like to update."
+        },
+        {
+            name: 'newRole',
+            type: 'input',
+            message: "What is this employee's new role ID?"
+        }
+    ])
+    .then(answer => {
+        const sql = `UPDATE employee
+                    SET role_id = ${answer.newRole}
+                    WHERE employee.id = ${answer.employee};`
+        db.query(sql, (err, res) => {
+            console.log('Employee Role updated!');
+            userMenu();
+        });
+    });
+};
+
+function updateEmployeeManager() {
+    inquirer.prompt([
+        {
+            name: 'employee',
+            type: 'input',
+            message: "Enter the employee ID of the employee you would like to update."
+        },
+        {
+            name: 'newMgr',
+            type: 'input',
+            message: "What is this the ID of the employee's new manager?"
+        }
+    ])
+    .then(answer => {
+        const sql = `UPDATE employee
+                    SET manager_id = ${answer.newMgr}
+                    WHERE employee.id = ${answer.employee};`
+        db.query(sql, (err, res) => {
+            console.log('Employee Manager updated!');
+            userMenu();
+        });
+    });
+};
+
+
 
 
 
