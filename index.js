@@ -1,13 +1,15 @@
+// dependencies
 const inquirer = require('inquirer');
 require('console.table');
 const db = require('./db/connection');
 
-
+// connection to the database
 db.connect(err => {
     if (err) throw err;
     userMenu();
 });
 
+// prompts main menu for user
 function userMenu() {
     inquirer.prompt([
         {
@@ -61,6 +63,7 @@ function userMenu() {
     })
 };
 
+// view all departments
 function viewDepartments() {
     const sql = 'SELECT * FROM department';
     
@@ -71,6 +74,7 @@ function viewDepartments() {
     });
 };
 
+// view all roles
 function viewRoles() {
     const sql = `SELECT role.id, role.title, role.salary, department.name AS department 
                 FROM role 
@@ -83,6 +87,7 @@ function viewRoles() {
     });
 };
 
+// view all employees
 function viewEmployees() {
     const sql = `SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(mgr.first_name, ' ', mgr.last_name) AS manager
                 FROM employee 
@@ -97,6 +102,7 @@ function viewEmployees() {
     });
 };
 
+// add a new department to the department table
 function addDepartment() {
     inquirer.prompt([
         {
@@ -114,6 +120,7 @@ function addDepartment() {
     });
 };
 
+// add a new role to the role table
 function addRole() {
     inquirer.prompt([
         {
@@ -142,6 +149,7 @@ function addRole() {
     });
 };
 
+// add a new employee to the employee table
 function addEmployee() {
     inquirer.prompt([
         {
@@ -175,6 +183,7 @@ function addEmployee() {
     });
 };
 
+// Updates the existing employee's role
 function updateEmployeeRole() {
     inquirer.prompt([
         {
@@ -199,6 +208,7 @@ function updateEmployeeRole() {
     });
 };
 
+// updates the existing employee's manager
 function updateEmployeeManager() {
     inquirer.prompt([
         {
